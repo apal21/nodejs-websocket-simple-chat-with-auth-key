@@ -8,7 +8,7 @@ Start node.js server and put its path in the client's javascript inside websocke
 
 Just change the path of websocket to your herokuapp's path.
 
-For example, if your app is example.herokuapp.com then put wss://example.herokuapp.com/
+For example, if your app is `example.herokuapp.com` then put `wss://example.herokuapp.com/`
 
 Do not specify any port in your client javascript.
 
