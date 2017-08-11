@@ -1,5 +1,5 @@
 var server = require('ws').Server
-var socket = new server({ port : 3000 })
+var socket = new server({ port : process.env.PORT || 3000 })
 
 var name
 

@@ -1,0 +1,7 @@
+{
+  "name": "Node.js Websocket Chat",
+  "description": "Chat application using websockets instead of polling",
+  "repository": "https://github.com/apal21/nodejs-websocket-simple-chat-with-auth-key/",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "websocket", "static"]
+}
