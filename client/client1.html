@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Client2</title>
+    <title>Client1</title>
     <style media="screen">
       .chatbox {
         width: 500px;
@@ -31,8 +31,12 @@
     </div>
 
     <script type="text/javascript">
+    var socket
+    connect()
 
-      var socket = new WebSocket("ws://localhost:3000/")
+    function connect() {
+
+      socket = new WebSocket("ws://localhost:3000/")
 
       var chatbox = document.querySelector(".chatbox")
 
@@ -44,17 +48,29 @@
           name : "Apal",
           data : key
         }))
+        console.log("socket connected");
       }
 
       socket.onmessage = function (event) {
         var response = JSON.parse(event.data)
-        chatbox.innerHTML += response.name + ": " + response.data + "<br>"
+        // chatbox.innerHTML += response.name + ": " + response.data + "<br>"
+        chatbox.innerHTML += JSON.stringify(response.data[0][0]) + "<br>"
+
+        if (response.data == 1) {
+          chatbox.innerHTML += "On <br>"
+        } else if (response.data == 0) {
+          chatbox.innerHTML += "Off <br>"
+        }
+
         chatbox.scrollTop = chatbox.scrollHeight
       }
 
       document.querySelector("#btn").addEventListener('click', function (e) {
         e.preventDefault()
-        var text = document.querySelector("#text").value
+        var text = document.querySelector("#text").value.trim()
+        if (text == "") {
+          return false
+        }
         chatbox.innerHTML += "You : " + text + "<br>"
         socket.send(JSON.stringify({
           type : "message",
@@ -64,10 +80,22 @@
         chatbox.scrollTop = chatbox.scrollHeight
       })
 
-      socket.onclose = function () {
-        chatbox.innerHTML += "Connection Closed! Refresh page"
-        chatbox.scrollTop = chatbox.scrollHeight
+      socket.onclose = function (err) {
+        console.log("closed");
+        console.log(err);
+        // chatbox.innerHTML += "Connection Closed! Retrying <br>"
+        // chatbox.scrollTop = chatbox.scrollHeight
+
+        setTimeout(function() {
+          reconnect = true
+          connect()
+        }, 1000)
       }
+
+      socket.onerror = function (err) {
+        console.log(err)
+      }
+    }
     </script>
 
   </body>
