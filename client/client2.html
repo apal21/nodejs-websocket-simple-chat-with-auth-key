@@ -54,7 +54,7 @@
       socket.onmessage = function (event) {
         var response = JSON.parse(event.data)
         // chatbox.innerHTML += response.name + ": " + response.data + "<br>"
-        chatbox.innerHTML += JSON.stringify(response.data[0][0]) + "<br>"
+        chatbox.innerHTML += response.name +  " : " + response.data + "<br>"
 
         if (response.data == 1) {
           chatbox.innerHTML += "On <br>"
